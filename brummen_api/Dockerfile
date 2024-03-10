@@ -1,29 +1,16 @@
-# Base image
+# Dockerfile
 FROM python:3.9-slim
 
-# Install dependencies
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    libasound2-dev \
-    portaudio19-dev \
-    libportaudio2 \
-    libportaudiocpp0 \
-    ffmpeg \
-    libmtdev1 \
-    libgl1-mesa-glx
-
-# Set the working directory
 WORKDIR /app
 
-# Install Python dependencies
-RUN pip install kivy pyaudio pocketsphinx numpy simpleaudio
+# Copy the Flask application code into the image
+COPY . .
 
+# Install dependencies (if any)
+RUN pip install -r requirements.txt
 
-# Copy the application files to the container
-COPY . /app
+# Expose the port that the Flask server is listening on
+EXPOSE 5000
 
-# Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Set the default command
-CMD ["python", "main.py"]
+# Command to run the Flask application
+CMD ["python", "app.py"]

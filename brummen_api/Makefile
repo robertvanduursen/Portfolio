@@ -6,3 +6,4 @@ io: ## build an image for local use
 
 run:
 	docker run --rm -it $(image_name) bash
+	docker run -p 5000:5000 my_image
